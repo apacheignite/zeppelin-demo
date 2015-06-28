@@ -20,7 +20,7 @@ Install and start Zeppelin
 
 Generate data
 -------------
-To generate data open JsonGenerator class, customize ORG_CNT and PERSON_PER_ORG_CNT constants
+To generate the data open JsonGenerator class, customize ORG_CNT and PERSON_PER_ORG_CNT constants
 if needed and run the class.
 Two JSON files (organizations.json and persons.json) will be created in the root folder of this project.
 
