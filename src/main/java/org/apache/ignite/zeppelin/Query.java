@@ -23,21 +23,31 @@ public class Query {
             System.out.println(orgCache.size());
             System.out.println(cache.size());
 
+//            String sql =
+//                "explain SELECT p.name, m.name, o.name " +
+//                "FROM Person p, Person m, \"" + ORG_CACHE + "\".Organization o " +
+//                "WHERE p.managerId = m.id " +
+//                "AND p.orgId = o.id " +
+//                "AND o.id = ? " +
+//                "ORDER BY p.name";
+
             String sql =
-                "explain SELECT p.name, m.name, o.name " +
-                "FROM Person p, Person m, \"" + ORG_CACHE + "\".Organization o " +
-                "WHERE p.managerId = m.id " +
-                "AND p.orgId = o.id " +
-                "AND o.id = ? " +
-                "ORDER BY p.name";
+                "SELECT o.name as Organization, avg(p.salary) as Salary " +
+                "FROM Person p, \"Organizations\".Organization o " +
+                "WHERE p.orgId = o.id " +
+                "AND p.managerId is null " +
+                "GROUP BY o.name " +
+                "limit 100";
 
-            long s = System.currentTimeMillis();
+            for (int i = 0; i < 3; i++) {
+                long s = System.currentTimeMillis();
 
-            System.out.println(cache.query(new SqlFieldsQuery(sql).setArgs(10)).getAll());
+                System.out.println(cache.query(new SqlFieldsQuery(sql).setArgs(10)).getAll());
 
-            long d = System.currentTimeMillis() - s;
+                long d = System.currentTimeMillis() - s;
 
-            System.out.println("Time: " + d);
+                System.out.println("Time: " + d);
+            }
         }
     }
 }
