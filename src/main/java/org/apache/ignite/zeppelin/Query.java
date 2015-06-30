@@ -31,7 +31,8 @@ public class Query {
                 "WHERE p.managerId = m.id " +
                 "AND p.orgId = o.id " +
                 "AND o.id = ? " +
-                "ORDER BY p.name";
+                "ORDER BY p.name " +
+                "LIMIT 100";
 
             query(cache, sql);
 

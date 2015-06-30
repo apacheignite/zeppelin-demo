@@ -15,6 +15,8 @@ public class JsonGenerator {
         PrintWriter personWriter = new PrintWriter(new File("persons.json"));
 
         try {
+            long personId = 0;
+
             for (long orgId = 0; orgId < ORG_CNT; orgId++) {
                 String orgJson = "{\"id\": " + orgId + ", \"name\": \"Organization" + orgId + "\"}";
 
@@ -23,8 +25,6 @@ public class JsonGenerator {
                 Long managerId = null;
 
                 for (long i = 0; i < PERSON_PER_ORG_CNT; i++) {
-                    long personId = orgId * ORG_CNT + i;
-
                     String personJson = "{\"id\": " + personId + ", \"name\": \"Person" + personId + "\", \"orgId\": " +
                         orgId + ", \"managerId\": " + managerId + ", \"salary\": " + RND.nextInt(1000000) + "}";
 
@@ -32,6 +32,8 @@ public class JsonGenerator {
 
                     if (managerId == null)
                         managerId = personId;
+
+                    personId++;
                 }
             }
         }

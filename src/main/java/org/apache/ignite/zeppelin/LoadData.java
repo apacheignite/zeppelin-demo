@@ -5,7 +5,6 @@ import org.apache.commons.lang.time.*;
 import org.apache.ignite.*;
 import org.apache.ignite.cache.affinity.*;
 import org.apache.ignite.configuration.*;
-import org.apache.ignite.lang.*;
 
 import java.io.*;
 
@@ -24,11 +23,11 @@ public class LoadData {
 
             IgniteCache<Long, Organization> orgCache = ignite.getOrCreateCache(orgCacheCfg);
 
-            CacheConfiguration<AffinityKey<IgniteUuid>, Person> personCacheCfg = new CacheConfiguration<>();
+            CacheConfiguration<AffinityKey<Long>, Person> personCacheCfg = new CacheConfiguration<>();
 
             personCacheCfg.setIndexedTypes(AffinityKey.class, Person.class);
 
-            IgniteCache<AffinityKey<IgniteUuid>, Person> personCache = ignite.getOrCreateCache(personCacheCfg);
+            IgniteCache<AffinityKey<Long>, Person> personCache = ignite.getOrCreateCache(personCacheCfg);
 
             orgCache.clear();
             personCache.clear();
@@ -65,7 +64,7 @@ public class LoadData {
             sw.reset();
             sw.start();
 
-            try (IgniteDataStreamer<AffinityKey<IgniteUuid>, Person> personStreamer = ignite.dataStreamer(null)) {
+            try (IgniteDataStreamer<AffinityKey<Long>, Person> personStreamer = ignite.dataStreamer(null)) {
                 try (BufferedReader reader = new BufferedReader(new FileReader("persons.json"))) {
                     String line;
 
@@ -74,7 +73,7 @@ public class LoadData {
                     while ((line = reader.readLine()) != null) {
                         Person person = GSON.fromJson(line, Person.class);
 
-                        personStreamer.addData(new AffinityKey<>(IgniteUuid.randomUuid(), person.getOrgId()), person);
+                        personStreamer.addData(new AffinityKey<>(person.getId(), person.getOrgId()), person);
 
                         if (i > 0 && i % 10000 == 0)
                             System.out.println("Loaded " + i + " persons.");

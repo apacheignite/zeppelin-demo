@@ -28,8 +28,8 @@ public class Person implements Serializable {
         this.salary = salary;
     }
 
-    public String getName() {
-        return name;
+    public long getId() {
+        return id;
     }
 
     public long getOrgId() {
