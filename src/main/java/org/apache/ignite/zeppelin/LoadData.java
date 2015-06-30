@@ -43,10 +43,17 @@ public class LoadData {
                 try (BufferedReader reader = new BufferedReader(new FileReader("organizations.json"))) {
                     String line;
 
+                    int i = 0;
+
                     while ((line = reader.readLine()) != null) {
                         Organization org = GSON.fromJson(line, Organization.class);
 
                         orgStreamer.addData(org.getId(), org);
+
+                        if (i > 0 && i % 10000 == 0)
+                            System.out.println("Loaded " + i + " organizations.");
+
+                        i++;
                     }
                 }
             }
@@ -62,10 +69,17 @@ public class LoadData {
                 try (BufferedReader reader = new BufferedReader(new FileReader("persons.json"))) {
                     String line;
 
+                    int i = 0;
+
                     while ((line = reader.readLine()) != null) {
                         Person person = GSON.fromJson(line, Person.class);
 
                         personStreamer.addData(new AffinityKey<>(IgniteUuid.randomUuid(), person.getOrgId()), person);
+
+                        if (i > 0 && i % 10000 == 0)
+                            System.out.println("Loaded " + i + " persons.");
+
+                        i++;
                     }
                 }
             }

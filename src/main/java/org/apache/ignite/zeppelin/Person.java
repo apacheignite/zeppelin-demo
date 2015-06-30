@@ -11,7 +11,7 @@ public class Person implements Serializable {
     @QuerySqlField
     private String name;
 
-    @QuerySqlField
+    @QuerySqlField(index = true)
     private long orgId;
 
     @QuerySqlField(index = true)

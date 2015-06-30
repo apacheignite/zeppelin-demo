@@ -6,9 +6,9 @@ import java.util.*;
 public class JsonGenerator {
     private static final Random RND = new Random();
 
-    private static final int ORG_CNT = 1_000_000;
+    private static final int ORG_CNT = 1_000;
 
-    private static final int PERSON_PER_ORG_CNT = 5;
+    private static final int PERSON_PER_ORG_CNT = 5_000;
 
     public static void main(String[] args) throws IOException {
         PrintWriter orgWriter = new PrintWriter(new File("organizations.json"));
