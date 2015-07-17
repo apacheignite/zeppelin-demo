@@ -16,7 +16,7 @@ public class LoadData {
     public static void main(String[] args) throws IOException {
         Ignition.setClientMode(true);
 
-        try (Ignite ignite = Ignition.start()) {
+        try (Ignite ignite = Ignition.start("ignite.xml")) {
             CacheConfiguration<Long, Organization> orgCacheCfg = new CacheConfiguration<>(ORG_CACHE);
 
             orgCacheCfg.setIndexedTypes(Long.class, Organization.class);

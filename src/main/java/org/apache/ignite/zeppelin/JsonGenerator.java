@@ -6,7 +6,7 @@ import java.util.*;
 public class JsonGenerator {
     private static final Random RND = new Random();
 
-    private static final int ORG_CNT = 1_000;
+    private static final int ORG_CNT = 500;
 
     private static final int PERSON_PER_ORG_CNT = 5_000;
 
