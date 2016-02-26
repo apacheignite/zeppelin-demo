@@ -1,7 +1,7 @@
 Install and start Spark
 -----------------------
 1. Download and unzip Spark: http://www.apache.org/dyn/closer.cgi/spark/spark-1.4.0/spark-1.4.0-bin-hadoop2.6.tgz
-2. Go to Spark home folder.
+2. Go to Spark home folder
 3. Create env script from template: cp conf/spark-env.sh.template conf/spark-env.sh
 4. Edit conf/spark-env.sh and add this line: export SPARK_JAVA_OPTS="-Dspark.executor.memory=8g"
 5. Start master process: ./sbin/start-master.sh
@@ -11,12 +11,14 @@ Install and start Spark
 
 Install and start Zeppelin
 --------------------------
-1. Clone GitHub project: https://github.com/apache/incubator-zeppelin
-2. Go to Zeppelin home folder.
-3. Build: mvn clean install -DskipTests
-4. Define custom port not to conflict with Spark: export ZEPPELIN_PORT=9090
+1. Download and unzip Zeppelin: http://www.us.apache.org/dist/incubator/zeppelin/0.5.6-incubating/zeppelin-0.5.6-incubating-bin-all.tgz
+2. Go to Zeppelin home folder
+3. Define custom port not to conflict with Spark: export ZEPPELIN_PORT=9090
 4. Start daemon: ./bin/zeppelin-daemon.sh start
 5. Open in browser: http://localhost:9090/
+6. Click on Interpreter on the top navigation bar
+7. Locate 'ignite' section and set JDBC URL: jdbc:ignite://localhost:11211/
+8. Click 'Save' and then 'restart' buttons to restart the interpreter
 
 Generate data
 -------------
