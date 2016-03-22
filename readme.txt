@@ -28,32 +28,26 @@ Two JSON files (organizations.json and persons.json) will be created in the root
 
 Execute Spark SQL in Zeppelin
 -----------------------------
-Create new notebook and run the commands below.
-
-Create organizations data frame:
-    %spark val orgDf = sqlContext.read.json("PATH_TO_THIS_PROJECT/organizations.json")
-
-Create persons data frame:
-    %spark val personDf = sqlContext.read.json("PATH_TO_THIS_PROJECT/persons.json")
-
-Register table names for data frames:
+1. Create new notebook.
+2. Create data frames:
+    %spark
+    val orgDf = sqlContext.read.json("PATH_TO_THIS_PROJECT/organizations.json")
+    val personDf = sqlContext.read.json("PATH_TO_THIS_PROJECT/persons.json")
+3. Register table names for data frames:
     %spark
     orgDf.registerTempTable("Organization")
     personDf.registerTempTable("Person")
-
-Execute query:
-    %sql SELECT p.name as Person, o.name as Organization FROM Person p, Organization o WHERE p.orgId = o.id AND o.id = 10
+4. Execute queries using ''%sql' prefix (see samples below).
 
 Execute Ignite SQL in Zeppelin
 ------------------------------
-1. Start several data nodes using Node class.
+1. Start one or more data nodes using Node class.
 2. Run LoadData class to load the data.
-3. Create new notebook and execute the query:
+3. Create new notebook and execute queries using ''%ignite.ignitesql' prefix (see samples below).
 
-%ignite.ignitesql SELECT p.name as Person, o.name as Organization FROM Person p, "Organizations".Organization o WHERE p.orgId = o.id AND o.id = 10
-
-Sample queries
---------------
+Spark sample queries
+--------------------
+%sql
 SELECT p.name as Employee, m.name as Manager, o.name as Organization
 FROM Person p, Person m, Organization o
 WHERE p.managerId = m.id
@@ -61,6 +55,7 @@ AND p.orgId = o.id
 AND o.id = 10
 ORDER BY p.name
 
+%sql
 SELECT o.name as Organization, avg(p.salary) as Salary
 FROM Person p, Organization o
 WHERE p.orgId = o.id
@@ -69,9 +64,37 @@ GROUP BY o.name
 ORDER BY Salary
 LIMIT 100
 
+%sql
 SELECT m.name as managerName, o.name as orgName, count(p.name) personCnt
 FROM Person p, Person m, Organization o
 WHERE p.orgId = o.id
 AND p.managerId = m.id
 GROUP BY  o.name, m.name
-Limit 100
+LIMIT 100
+
+Ignite sample queries
+--------------------
+%ignite.ignitesql
+SELECT p.name as Employee, m.name as Manager, o.name as Organization
+FROM Person p, Person m, "Organizations".Organization o
+WHERE p.managerId = m.id
+AND p.orgId = o.id
+AND o.id = 10
+ORDER BY p.name
+
+%ignite.ignitesql
+SELECT o.name as Organization, avg(p.salary) as Salary
+FROM Person p, "Organizations".Organization o
+WHERE p.orgId = o.id
+AND p.managerId is null
+GROUP BY o.name
+ORDER BY Salary
+LIMIT 100
+
+%ignite.ignitesql
+SELECT m.name as managerName, o.name as orgName, count(p.name) personCnt
+FROM Person p, Person m, "Organizations".Organization o
+WHERE p.orgId = o.id
+AND p.managerId = m.id
+GROUP BY  o.name, m.name
+LIMIT 100
