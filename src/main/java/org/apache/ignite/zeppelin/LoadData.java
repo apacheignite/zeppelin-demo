@@ -1,19 +1,22 @@
 package org.apache.ignite.zeppelin;
 
-import com.google.gson.*;
-import org.apache.commons.lang.time.*;
-import org.apache.ignite.*;
-import org.apache.ignite.cache.affinity.*;
-import org.apache.ignite.configuration.*;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import com.google.gson.Gson;
+import org.apache.commons.lang.time.StopWatch;
+import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteCache;
+import org.apache.ignite.IgniteDataStreamer;
+import org.apache.ignite.Ignition;
+import org.apache.ignite.cache.affinity.AffinityKey;
+import org.apache.ignite.configuration.CacheConfiguration;
 
 public class LoadData {
     private static final Gson GSON = new Gson();
 
     private static final String ORG_CACHE = "Organizations";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         Ignition.setClientMode(true);
 
         try (Ignite ignite = Ignition.start("ignite.xml")) {

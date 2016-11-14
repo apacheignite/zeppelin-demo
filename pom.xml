@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <ignite.version>1.5.0.final</ignite.version>
+        <ignite.version>1.7.0</ignite.version>
     </properties>
 
     <dependencies>

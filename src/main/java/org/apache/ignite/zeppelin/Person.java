@@ -1,8 +1,7 @@
 package org.apache.ignite.zeppelin;
 
-import org.apache.ignite.cache.query.annotations.*;
-
-import java.io.*;
+import java.io.Serializable;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 public class Person implements Serializable {
     @QuerySqlField(index = true)
